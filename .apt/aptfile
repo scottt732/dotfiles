@@ -1,0 +1,38 @@
+#!/usr/bin/env aptfile
+
+# trigger an apt-get update
+update
+
+package "curl"
+package "direnv"
+package "zsh"
+package "ag"
+package "bat"
+package "fzf"
+package "git"
+package "jq"
+package "progress"
+package "htop"
+
+# install some packages
+package "build-essential"
+package "software-properties-common"
+
+# install a few more packages from that ppa
+package "python2.7"
+package "python-pip"
+package "python-dev"
+
+# setup some debian configuration
+debconf_selection "mysql mysql-server/root_password password root"
+debconf_selection "mysql mysql-server/root_password_again password root"
+
+# install another package
+package "mysql-server"
+
+# install a package from a download url
+package_from_url "google-chrome-stable" "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+
+# you can also execute arbitrary bash
+echo "🚀 ALL GOOD TO GO"
+touch .installed

@@ -1,0 +1,5 @@
+*
+!.apt/
+!.brew/
+!.tmux/
+!.zsh/
