@@ -1,6 +1,3 @@
-#!/usr/bin/env zsh
-
-# What OS are we running?
 if [[ $(uname) == "Darwin" ]]; then
     export ZSH_OS="mac"
     source "${ZDOTDIR}/os/mac.zsh"
@@ -21,5 +18,10 @@ if command -v kubectl > /dev/null; then
     source "${ZDOTDIR}/k8s.zsh"
 fi
 
+source "${ZDOTDIR}/antidote.zsh"
+source "${ZDOTDIR}/direnv-1.zsh"
+source "${ZDOTDIR}/ps10k-1.zsh"
+source "${ZDOTDIR}/direnv-2.zsh"
+source "${ZDOTDIR}/ps10k-2.zsh"
 source "${ZDOTDIR}/aliases.zsh"
 source "${ZDOTDIR}/completions.zsh"
