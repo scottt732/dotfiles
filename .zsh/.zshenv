@@ -51,3 +51,7 @@ fi
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "$ZPROFILE_PATH" ]]; then
   . "$ZPROFILE_PATH"
 fi
+
+while [[ -z "$BW_SESSION" ]] && command -v bw > /dev/null; do
+  export BW_SESSION=$(bw unlock --raw)
+done;
