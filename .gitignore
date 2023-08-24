@@ -4,6 +4,7 @@
 
 .config/*
 !.config/direnv/
+!.config/direnv/lib/
 
 !.apt/
 !.brew/
