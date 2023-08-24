@@ -1,7 +1,10 @@
-.config/*
-!.config/direnv/*
-
 *
+
+!.config/
+
+.config/*
+!.config/direnv/
+
 !.apt/
 !.brew/
 !.tmux/
