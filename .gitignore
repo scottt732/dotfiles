@@ -1,6 +1,8 @@
+.config/*
+!.config/direnv/*
+
 *
 !.apt/
 !.brew/
 !.tmux/
 !.zsh/
-!.config/direnv/*
