@@ -1,12 +1,15 @@
-*
+/*
 
-!.config/
-
-.config/*
-!.config/direnv/
-!.config/direnv/lib/
+!.config/*
+.config/**/
+!.config/direnv/*
 
 !.apt/
+
 !.brew/
+
 !.tmux/
+.tmux/plugins/tpm/
+
 !.zsh/
+.zsh/.antidote/
