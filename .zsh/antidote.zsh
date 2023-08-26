@@ -1,9 +1,13 @@
-zsh_plugins="$ZDOTDIR/.zsh_plugins.zsh"
-[[ -f ${zsh_plugins:r}.txt ]] || touch ${zsh_plugins:r}.txt
+ZSH_PLUGINS_ZSH="$ZDOTDIR/.zsh_plugins.zsh"
+ZSH_PLUGINS_TXT="${ZSH_PLUGINS_ZSH:r}.txt"
+
+[[ -f "$ZSH_PLUGINS_TXT" ]] || touch "$ZSH_PLUGINS_TXT"
+
 fpath+=($ZDOTDIR/.antidote)
 autoload -Uz $fpath[-1]/antidote
 
-if [[ ! $zsh_plugins -nt ${zsh_plugins:r}.txt ]]; then
-  (antidote bundle <${zsh_plugins:r}.txt >|$zsh_plugins)
+if [[ ! "$ZSH_PLUGINS_ZSH" -nt "$ZSH_PLUGINS_TXT" ]]; then
+  (antidote bundle <"$ZSH_PLUGINS_TXT" >|"$ZSH_PLUGINS_ZSH")
 fi
-source $zsh_plugins
+
+source "$ZSH_PLUGINS_ZSH"

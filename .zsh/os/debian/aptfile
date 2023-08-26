@@ -1,0 +1,19 @@
+#!/usr/bin/env aptfile
+
+# trigger an apt-get update
+update
+
+package "curl"
+package "direnv"
+package "zsh"
+package "silversearcher-ag"
+package "bat"
+package "fzf"
+package "git"
+package "jq"
+package "progress"
+package "htop"
+
+# install some packages
+package "build-essential"
+package "software-properties-common"

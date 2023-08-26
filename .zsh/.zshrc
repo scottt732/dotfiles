@@ -1,9 +1,12 @@
 if [[ $(uname) == "Darwin" ]]; then
     export ZSH_OS="mac"
-    source "${ZDOTDIR}/os/mac.zsh"
+    source "${ZDOTDIR}/os/mac/import.zsh"
+elif command -v freebsd-version > /dev/null; then
+    export ZSH_OS="freebsd"
+    source "$ZSH_CUSTOM/os/freebsd/import.zsh"
 elif command -v apt > /dev/null; then
     export ZSH_OS="debian"
-    source "${ZDOTDIR}/os/debian.zsh"
+    source "${ZDOTDIR}/os/debian/import.zsh"
 fi
 
 if command -v systemctl > /dev/null; then
@@ -19,9 +22,6 @@ if command -v kubectl > /dev/null; then
 fi
 
 source "${ZDOTDIR}/antidote.zsh"
-source "${ZDOTDIR}/direnv-1.zsh"
-source "${ZDOTDIR}/ps10k-1.zsh"
-source "${ZDOTDIR}/direnv-2.zsh"
-source "${ZDOTDIR}/ps10k-2.zsh"
+source "${ZDOTDIR}/direnv-ps10k.zsh"
 source "${ZDOTDIR}/aliases.zsh"
 source "${ZDOTDIR}/completions.zsh"

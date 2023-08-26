@@ -6,16 +6,8 @@ if [ -d "/snap/bin" ] ; then
   export PATH="/snap/bin:$PATH"
 fi
 
-if [ -d "$HOME/.local/bin" ] ; then
-  export PATH=$PATH:$HOME/.local/bin
-fi
-
 if [ -d "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
-fi
-
-if [ -d "$HOME/.local/bin" ] ; then
-    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -35,6 +27,10 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export ZANTIDOTEDIR="$ZDOTDIR/.antidote"
 export ZPERSONALDIR="$ZANTIDOTEDIR/.personal"
 export ZWORKDIR="$ZANTIDOTEDIR/.work"
+export ZLOCALBIN="$HOME/.local/bin"
+
+mkdir -p "$ZLOCALBIN" 
+export PATH="${PATH}:${ZLOCALBIN}"
 
 # Mac OS X uses path_helper and /etc/paths.d to preload PATH, clear it out first
 if [ -x /usr/libexec/path_helper ]; then
@@ -52,6 +48,6 @@ if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "$ZPROFILE_PATH" ]]; then
   . "$ZPROFILE_PATH"
 fi
 
-while [[ -z "$BW_SESSION" ]] && command -v bw > /dev/null; do
-  export BW_SESSION=$(bw unlock --raw)
-done;
+# while [[ -z "$BW_SESSION" ]] && command -v bw > /dev/null; do
+#   export BW_SESSION=$(bw unlock --raw)
+# done;
