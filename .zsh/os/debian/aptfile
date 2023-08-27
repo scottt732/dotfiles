@@ -13,6 +13,7 @@ package "git"
 package "jq"
 package "progress"
 package "htop"
+package "lsd"
 
 # install some packages
 package "build-essential"
