@@ -38,11 +38,6 @@ if [ -x /usr/libexec/path_helper ]; then
   eval `/usr/libexec/path_helper -s`
 fi
 
-# Get Antidote
-if [[ ! -d "$ZANTIDOTEDIR" ]]; then
-  git clone --depth=1 https://github.com/mattmc3/antidote.git $ZANTIDOTEDIR
-fi
-
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "$ZPROFILE_PATH" ]]; then
   . "$ZPROFILE_PATH"

@@ -1,6 +1,11 @@
 ZSH_PLUGINS_ZSH="$ZDOTDIR/.zsh_plugins.zsh"
 ZSH_PLUGINS_TXT="${ZSH_PLUGINS_ZSH:r}.txt"
 
+if [[ ! -f "$ZANTIDOTEDIR/antidote.zsh" ]]; then
+  # Get Antidote
+  git clone --depth=1 https://github.com/mattmc3/antidote.git $ZANTIDOTEDIR
+fi
+
 [[ -f "$ZSH_PLUGINS_TXT" ]] || touch "$ZSH_PLUGINS_TXT"
 
 fpath+=($ZDOTDIR/.antidote)
