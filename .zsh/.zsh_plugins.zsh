@@ -27,6 +27,8 @@ fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SL
 source /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/dirhistory/dirhistory.plugin.zsh
 fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/sudo )
 source /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/sudo/sudo.plugin.zsh
+fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/ssh-agent )
+source /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-ohmyzsh-SLASH-ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh
 fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-gantsign-SLASH-zsh-plugins/bat )
 fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-gantsign-SLASH-zsh-plugins/ctop )
 fpath+=( /home/scottt732/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-gantsign-SLASH-zsh-plugins/dive )

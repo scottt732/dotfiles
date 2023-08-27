@@ -14,6 +14,7 @@ ohmyzsh/ohmyzsh path:plugins/git-extras
 ohmyzsh/ohmyzsh path:plugins/extract
 ohmyzsh/ohmyzsh path:plugins/dirhistory
 ohmyzsh/ohmyzsh path:plugins/sudo
+ohmyzsh/ohmyzsh path:plugins/ssh-agent
 
 gantsign/zsh-plugins path:bat kind:fpath
 gantsign/zsh-plugins path:ctop kind:fpath

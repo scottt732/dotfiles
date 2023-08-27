@@ -10,9 +10,6 @@ if [[ ! -f "$APTFILE_EXECUTABLE" ]] && [[ $SUDO_RESPONSE == 2 ]]; then
     chmod +x $APTFILE_EXECUTABLE
 fi
 
-[[ -f "$APTFILE" ]] || echo "$APTFILE doesn't exist"
-[[ ! -f "$APTFILE_TS" ]] || echo "$APTFILE_TS doesn't exist"
-
 if [[ -f "$APTFILE" ]] && [[ $SUDO_RESPONSE == 2 ]]; then
     if [[ ! -f "$APTFILE_TS" ]] || [[ ! "$APTFILE_TS" -nt "$APTFILE" ]]; then
         echo "Installing apt packages"
