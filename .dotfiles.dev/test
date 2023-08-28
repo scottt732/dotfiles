@@ -16,8 +16,8 @@ docker build \
     --build-arg="GID=${PGID}" \
     --build-arg="DOTFILES_URL=${DOTFILES_URL}" \
     --tag "dotfiles_test" \
-    . \
-    $@
+    $@ \
+    . 
 
 docker run \
     -it \

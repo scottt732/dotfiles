@@ -1,5 +1,8 @@
 # syntax=docker/dockerfile:1.0.0-experimental
-FROM ubuntu:lunar
+ARG IMAGE=ubuntu
+ARG IMAGE_VERSION=lunar
+
+FROM $IMAGE:$IMAGE_VERSION
 
 ARG UID=1000
 ARG GID=1000
@@ -25,9 +28,11 @@ COPY install /home/${USERNAME}/install
 
 RUN \
     set -ex; \
+    cat /etc/passwd; \
     chsh -s '/usr/bin/zsh' root; \
-    userdel ubuntu; \
-    addgroup --gid 1000 "${USERNAME}"; \
+    userdel `id -nu $UID` || true; \
+    groupdel `id -ng $GID` || true; \
+    addgroup --gid $GID "${USERNAME}"; \
     adduser --home "/home/${USERNAME}" --shell '/usr/bin/zsh' --uid $UID --gid $GID --no-create-home --gecos '' --disabled-password $USERNAME; \
     usermod -aG sudo "${USERNAME}"; \
     passwd -d $USERNAME; \
