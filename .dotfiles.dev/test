@@ -1,0 +1,28 @@
+#!/bin/bash
+set -ex
+
+ssh-add -L
+
+DOTFILES_URL="git@github.com:scottt732/dotfiles.git"
+PUSER=`whoami`
+PUID=`id -u`
+PGID=`id -g`
+
+export DOCKER_BUILDKIT=1
+
+docker build \
+    --build-arg="USERNAME=${PUSER}" \
+    --build-arg="UID=${PUID}" \
+    --build-arg="GID=${PGID}" \
+    --build-arg="DOTFILES_URL=${DOTFILES_URL}" \
+    --tag "dotfiles_test" \
+    . \
+    $@
+
+docker run \
+    -it \
+    --rm \
+    --env SSH_AUTH_SOCK \
+    --mount type=bind,source=${HOME}/.ssh/id_rsa,target=/home/${PUSER}/.ssh/id_rsa \
+    --hostname dotfiles-test \
+    dotfiles_test

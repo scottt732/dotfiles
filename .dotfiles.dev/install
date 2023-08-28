@@ -1,0 +1,14 @@
+#!/usr/bin/zsh
+set -e
+
+if [[ ! -d "${HOME}/.dotfiles" ]]; then
+    git clone --separate-git-dir="${HOME}/.dotfiles" "${DOTFILES_URL:?}" "${HOME}/.dotfiles.tmp"
+    rsync --recursive --verbose --exclude '.git' "${HOME}/.dotfiles.tmp/" "${HOME}/" > /dev/null; \
+    rm -r "${HOME}/.dotfiles.tmp"
+else
+    git --git-dir="${HOME}/.dotfiles/" --work-tree="${HOME}" pull --rebase
+fi
+
+if [[ "${DOTFILES_TEST_CONTAINER}" -eq "true" ]]; then
+    sh -c 'exec zsh -i'
+fi
