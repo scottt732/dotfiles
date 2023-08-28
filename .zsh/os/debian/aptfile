@@ -4,6 +4,8 @@
 update
 
 package "curl"
+package "nano"
+package "vim"
 package "direnv"
 package "zsh"
 package "silversearcher-ag"
