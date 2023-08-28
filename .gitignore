@@ -9,7 +9,7 @@
 !.brew/
 
 !.tmux/
-.tmux/plugins/tpm/
+.tmux/plugins/tpm
 
 !.zsh/
 .zsh/.antidote/
