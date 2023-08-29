@@ -21,4 +21,6 @@ gantsign/zsh-plugins path:ctop kind:fpath
 gantsign/zsh-plugins path:dive
 gantsign/zsh-plugins path:fd kind:fpath
 
+mfaerevaag/wd
+
 eth-p/bat-extras path:src kind:path

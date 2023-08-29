@@ -1,0 +1,4 @@
+.zcompdump
+.zcompdump.zwc
+.zsh_plugins.zsh
+os/debian/aptfile.ts

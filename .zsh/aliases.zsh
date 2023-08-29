@@ -4,9 +4,9 @@ if command -v bat > /dev/null; then
     alias cat="bat"
 fi
 
-if command -v ag > /dev/null; then
-    alias grep="ag"
-fi
+# if command -v ag > /dev/null; then
+#     alias grep="ag"
+# fi
 
 if command -v docker > /dev/null; then
     alias dl="f() { docker logs --tail 1 --follow $1 };f"
