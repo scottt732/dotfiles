@@ -1,3 +1,6 @@
+autoload -Uz compinit
+compinit
+
 # OS-specific
 if [[ $(uname) == "Darwin" ]]; then
     export ZSH_OS="mac"
