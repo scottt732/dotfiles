@@ -3,19 +3,20 @@
 # trigger an apt-get update
 update
 
-package "curl"
-package "nano"
-package "vim"
-package "direnv"
-package "zsh"
-package "silversearcher-ag"
 package "bat"
+package "ctop"
+package "curl"
+package "direnv"
 package "fzf"
 package "git"
-package "jq"
-package "progress"
 package "htop"
+package "jq"
 package "lsd"
+package "nano"
+package "progress"
+package "silversearcher-ag"
+package "vim"
+package "zsh"
 
 # install some packages
 package "build-essential"
