@@ -23,3 +23,6 @@ package "zsh"
 # install some packages
 package "build-essential"
 package "software-properties-common"
+
+# snap
+snap install bw 2>/dev/null 1>&2
