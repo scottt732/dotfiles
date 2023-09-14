@@ -32,6 +32,10 @@ export ZLOCALBIN="$HOME/.local/bin"
 mkdir -p "$ZLOCALBIN" 
 export PATH="${PATH}:${ZLOCALBIN}"
 
+if [ -d /usr/local/go ]; then
+  export PATH="${PATH}:/usr/local/go/bin"
+fi
+
 # Mac OS X uses path_helper and /etc/paths.d to preload PATH, clear it out first
 if [ -x /usr/libexec/path_helper ]; then
   PATH=''
