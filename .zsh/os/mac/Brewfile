@@ -1,0 +1,6 @@
+brew "bat"
+brew "gh"
+brew "lsd"
+brew "nano"
+brew "the_silver_searcher"
+brew "xz"

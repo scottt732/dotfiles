@@ -8,13 +8,6 @@ fi
 #     alias grep="ag"
 # fi
 
-if command -v docker > /dev/null; then
-    alias dl="f() { docker logs --tail 1 --follow $1 };f"
-    alias dr="f() { docker stop $1 && docker start $1 };f"
-    alias drl="f() { docker stop $1 && docker start $1 && docker logs --tail 1 --follow $1 };f"
-    alias dsr="f() { docker stop $1 && docker rm $1 };f"
-fi
-
 alias git-remote-keybase="git-remote-keybase.exe"
 
 if command -v lsd > /dev/null; then
@@ -23,6 +16,10 @@ if command -v lsd > /dev/null; then
     alias la='ls -a'
     alias lla='ls -la'
     alias lt='ls --tree'
+fi
+
+if command -v bat > /dev/null; then
+    alias less='bat'
 fi
 
 alias fzf="f() { /usr/bin/fzf --preview \"bat --color=always --style=numbers --line-range=:500 {}\" $@};f"
