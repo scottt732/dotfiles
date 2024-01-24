@@ -16,3 +16,9 @@ if [[ ! "$ZSH_PLUGINS_ZSH" -nt "$ZSH_PLUGINS_TXT" ]]; then
 fi
 
 source "$ZSH_PLUGINS_ZSH"
+
+# zsh-history-substring-search configuration
+# see https://github.com/zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up # or '\eOA'
+bindkey '^[[B' history-substring-search-down # or '\eOB'
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1

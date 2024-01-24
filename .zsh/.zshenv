@@ -10,8 +10,6 @@ if [ -d "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
 fi
 
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
 # RESET ZSHENV FILE VIA ENVIRONMENT VARIABLE
 # export USR_ZSHENV_PATH="$HOME/.zshenv"
 # if [[ $USR_ZSHENV_RESET -eq 1 ]]; then
@@ -50,3 +48,4 @@ fi
 # while [[ -z "$BW_SESSION" ]] && command -v bw > /dev/null; do
 #   export BW_SESSION=$(bw unlock --raw)
 # done;
+
