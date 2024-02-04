@@ -1,18 +1,10 @@
 k8s_version="v1.29"
 prereqs_to_install=()
-prereq_commands=('curl' 'wget' 'gpg')
-prereq_packages=('apt-transport-https' 'software-properties-common' 'ca-certificates' 'lsb-release')
-for prereq_command in ${prereq_commands[@]}
-do
-    if [ ! $(command -v $prereq_command) ]; then
-        echo "Installing $prereq_command..."
-        prereqs_to_install+=("$prereq_command")
-    fi
-done
+prereq_packages=('apt-transport-https' 'software-properties-common' 'ca-certificates' 'lsb-release' 'gnupg' 'gnupg2' 'curl' 'wget')
 
 for prereq_package in ${prereq_packages[@]}
 do
-    if [ ! $(dpkg-query -W -f='${Status}' $prereq_package 2>/dev/null | grep -c "ok installed") ]; then
+    if [ $(dpkg-query -W -f='${Status}' $prereq_package 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
         echo "Installing $prereq_package..."
         prereqs_to_install+=("$prereq_package")
     fi
@@ -54,6 +46,11 @@ if [ ! $(command -v ctop) ]; then
     echo "Installing ctop..."
     sudo wget https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 -O /usr/local/bin/ctop \
         && sudo chmod +x /usr/local/bin/ctop
+fi
+
+if test "$ZSH_OS" = "debian" && test "$ZSH_WSL" = "true" && [ $(dpkg-query -W -f='${Status}' wslu 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    sudo add-apt-repository ppa:wslutilities/wslu
+    sudo apt install wslu
 fi
 
 APTFILE="${ZDOTDIR}/os/debian/aptfile" 
