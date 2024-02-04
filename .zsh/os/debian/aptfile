@@ -4,7 +4,6 @@
 update
 
 package "bat"
-package "ctop"
 package "curl"
 package "direnv"
 package "fzf"
@@ -19,6 +18,11 @@ package "progress"
 package "silversearcher-ag"
 package "vim"
 package "zsh"
+
+package "gh"
+package "terraform"
+package "kubeadm" 
+package "kubectl"
 
 # install some packages
 package "build-essential"

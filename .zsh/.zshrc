@@ -1,6 +1,16 @@
 autoload -Uz compinit
 compinit
 
+HISTSIZE=1000
+HISTFILE="${HOME}/.zhistory"
+SAVEHIST=1000
+setopt INC_APPEND_HISTORY
+
+if command -v git > /dev/null; then
+    git config --global user.email "scottt732@gmail.com"
+    git config --global user.name "Scott Holodak"
+fi
+
 # OS-specific
 if [[ $(uname) == "Darwin" ]]; then
     export ZSH_OS="mac"
