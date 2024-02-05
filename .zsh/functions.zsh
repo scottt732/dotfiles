@@ -14,4 +14,8 @@ if command -v docker > /dev/null; then
     function dsrm () {
         docker stop $1 && docker rm $1
     }
+
+    function dra () {
+        docker ps -a --filter 'status=exited' --format '{{.ID}}' | xargs -I'{}' docker start {}
+    }
 fi

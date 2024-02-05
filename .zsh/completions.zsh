@@ -12,3 +12,11 @@ compctl -K _dotnet_zsh_complete dotnet
 if [ $(command -v kubeadm) ]; then
   source <(kubeadm completion zsh)
 fi
+
+if [ $(command -v gitops) ]; then
+  source <(gitops completion zsh)
+fi
+
+if [ $(command -v flux) ]; then
+  source <(flux completion zsh)
+fi
