@@ -6,3 +6,9 @@
 # certainly be done if desired.""
 
 export HISTFILE="${HOME}/.zhistory"
+
+if [ -f "${HOME}/.zprofile" ]; then
+    echo "Loading profile"
+    source "${HOME}/.zprofile"
+fi
+
