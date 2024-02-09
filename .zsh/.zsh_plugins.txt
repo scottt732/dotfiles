@@ -32,3 +32,5 @@ gantsign/zsh-plugins path:fd kind:fpath
 mfaerevaag/wd
 
 eth-p/bat-extras path:src kind:path
+
+superbrothers/zsh-kubectl-prompt

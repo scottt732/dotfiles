@@ -1,8 +1,13 @@
+tap bwhaley/ssmsh https://github.com/bwhaley/ssmsh
+
 brew "bat"
-brew "gh"
-brew "lsd"
-brew "nano"
-brew "the_silver_searcher"
-brew "xz"
 brew "bufbuild/buf/buf"
 brew "direnv"
+brew "gh"
+brew "jq"
+brew "lsd"
+brew "nano"
+brew "ssmsh"
+brew "the_silver_searcher"
+brew "yq"
+brew "xz"

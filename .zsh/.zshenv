@@ -14,7 +14,7 @@ fi
 # export USR_ZSHENV_PATH="$HOME/.zshenv"
 # if [[ $USR_ZSHENV_RESET -eq 1 ]]; then
 #   unset USR_ZSHENV_RESET
-  
+
 #   git clone https://gist.github.com/$GIST_USR_ZSHENV_ID "$TEMP_GIST"
 #   mv "$USR_ZSHENV_PATH" "$USR_ZSHENV_PATH.bak"
 #   cp "$TEMP_GIST/.zshenv" "$USR_ZSHENV_PATH"
@@ -27,7 +27,7 @@ export ZPERSONALDIR="$ZANTIDOTEDIR/.personal"
 export ZWORKDIR="$ZANTIDOTEDIR/.work"
 export ZLOCALBIN="$HOME/.local/bin"
 
-mkdir -p "$ZLOCALBIN" 
+mkdir -p "$ZLOCALBIN"
 export PATH="${PATH}:${ZLOCALBIN}"
 
 if [ -d /usr/local/go ]; then
@@ -49,3 +49,4 @@ fi
 #   export BW_SESSION=$(bw unlock --raw)
 # done;
 
+export BAT_CONFIG_PATH="${HOME}/.zshrc/bat.conf"

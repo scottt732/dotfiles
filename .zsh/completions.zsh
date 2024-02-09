@@ -20,3 +20,11 @@ fi
 if [ $(command -v flux) ]; then
   source <(flux completion zsh)
 fi
+
+if [ $(command -v pyenv) ]; then
+  eval "$(pyenv init -)"
+fi
+
+if [ $(command -v yarn) ]; then
+  export PATH="$PATH:$(yarn global bin)"
+fi
