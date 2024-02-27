@@ -9,8 +9,16 @@ _dotnet_zsh_complete()
 
 compctl -K _dotnet_zsh_complete dotnet
 
+if [ $(command -v kubectl) ]; then
+  source <(kubectl completion zsh)
+fi
+
 if [ $(command -v kubeadm) ]; then
   source <(kubeadm completion zsh)
+fi
+
+if [ $(command -v istioctl) ]; then
+  source <(istioctl completion zsh)
 fi
 
 if [ $(command -v gitops) ]; then
@@ -19,6 +27,10 @@ fi
 
 if [ $(command -v flux) ]; then
   source <(flux completion zsh)
+fi
+
+if [ $(command -v gh) ]; then
+  source <(gh completion -s zsh)
 fi
 
 if [ $(command -v pyenv) ]; then

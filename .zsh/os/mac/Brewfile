@@ -1,4 +1,5 @@
-tap bwhaley/ssmsh https://github.com/bwhaley/ssmsh
+tap 'bwhaley/ssmsh'
+tap 'hashicorp/tap'
 
 brew "bat"
 brew "bufbuild/buf/buf"
@@ -7,7 +8,9 @@ brew "gh"
 brew "jq"
 brew "lsd"
 brew "nano"
+brew "pre-commit"
 brew "ssmsh"
+brew "hashicorp/tap/terraform"
 brew "the_silver_searcher"
 brew "yq"
 brew "xz"
