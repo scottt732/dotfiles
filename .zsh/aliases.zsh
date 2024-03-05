@@ -44,8 +44,36 @@ openTicket() {
   fi
 }
 
+openCurrent() {
+  open "linear://linear.app/thecosmos/view/49842653-9a9b-49dc-b0e4-13ce1eba414a"
+}
+
+openUpcoming() {
+  open "linear://linear.app/thecosmos/view/b35afb44-a174-4284-8e28-51cabf15e527"
+}
+
+openMine() {
+  open "linear://linear.app/thecosmos/view/9f54cc8b-61f6-4ae3-8983-a72fcdbbea0e"
+}
+
 if command -v git > /dev/null; then
     git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
     git config --global alias.merged "branch --list '[^main|master|dev|staging|prod]*' -v --format='%(committerdate:short)  %(refname:short)' --sort=committerdate --merged"
     alias ticket=openTicket
 fi
+
+openCurrent() {
+  open "linear://linear.app/thecosmos/view/49842653-9a9b-49dc-b0e4-13ce1eba414a"
+}
+
+openUpcoming() {
+  open "linear://linear.app/thecosmos/view/b35afb44-a174-4284-8e28-51cabf15e527"
+}
+
+openMine() {
+  open "linear://linear.app/thecosmos/view/9f54cc8b-61f6-4ae3-8983-a72fcdbbea0e"
+}
+
+alias current=openCurrent
+alias upcoming=openUpcoming
+alias mine=openMine
