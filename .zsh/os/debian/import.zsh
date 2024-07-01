@@ -22,18 +22,18 @@ do
 done
 
 # Install keyrings
-if [ ! -f /etc/apt/sources.list.d/github-cli.list ] || [ ! -f /usr/share/keyrings/githubcli-archive-keyring.gpg ] || [ ! $(command -v gh) ]; then
-    echo "Installing github keyring..."
-    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-fi
+#if [ ! -f /etc/apt/sources.list.d/github-cli.list ] || [ ! -f /usr/share/keyrings/githubcli-archive-keyring.gpg ] || [ ! $(command -v gh) ]; then
+#     echo "Installing github keyring..."
+#     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+#         && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+#         && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+# fi
 
-if [ ! -f /etc/apt/keyrings/kubernetes-apt-keyring.gpg ]; then
-    echo "Installing kubernetes 1.29 keyring..."
-    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg \
-        && echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-fi
+# if [ ! -f /etc/apt/keyrings/kubernetes-apt-keyring.gpg ]; then
+#     echo "Installing kubernetes 1.29 keyring..."
+#     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg \
+#         && echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# fi
 
 if [ ! $(command -v ctop) ]; then
     echo "Installing ctop..."
