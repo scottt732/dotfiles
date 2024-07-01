@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+branch=$(git branch --show-current)
+fields=$(echo "$branch" | tr "/" "\n")
+echo "$fields"
+i=0
+have_feature=0
+have_fix=0
+for addr in $fields
+do
+    if [ $i -eq 0 ]; then
+        if [[ "$addr" == "feature" ]]; then
+            have_feature=1
+        elif [[ "$addr" == "fix" ]]; then
+            have_fix=1
+        fi
+    elif [ "$have_feature" -eq 1 ] || [ "$have_fix" -eq 1 ]; then
+        if [[ "" ]]; then
+        fi
+        echo "$addr"
+    fi
+
+    i=$((i+1))
+done

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+dirname=$(dirname "$0")
+current_branch=$(git branch --show-current)
+parent="$1"
+
+if [ -z "$parent" ]; then
+    parent=$($dirname/git-parent)
+fi
+
+if [[ "${current_branch}" =~ ^dev|staging|prod|main|master$ ]]; then
+    >&2 echo "Refusing to squash ${current_branch} branch"
+    exit 1
+fi
+
+echo "Squash current branch ${current_branch} (parent=$parent)"
+
+read -p "Continue (y/n)?" choice
+case "$choice" in
+  y|Y )
+    git fetch origin "$parent" > /dev/null
+    git reset --soft "$parent" > /dev/null
+    git add :/
+    echo "Commit and force push to complete."
+    ;;
+  * )
+    exit 1
+    ;;
+esac

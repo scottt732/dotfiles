@@ -22,10 +22,11 @@ fi
 # fi
 
 # DIRECTORIES
-export ZANTIDOTEDIR="$ZDOTDIR/.antidote"
-export ZPERSONALDIR="$ZANTIDOTEDIR/.personal"
-export ZWORKDIR="$ZANTIDOTEDIR/.work"
+export ZANTIDOTEDIR="${ZDOTDIR:?}/.antidote"
+export ZPERSONALDIR="${ZANTIDOTEDIR:?}/.personal"
+export ZWORKDIR="${ZANTIDOTEDIR:?}/.work"
 export ZLOCALBIN="$HOME/.local/bin"
+export ZGITDIR="${ZDOTDIR:?}/git"
 
 mkdir -p "$ZLOCALBIN"
 export PATH="${PATH}:${ZLOCALBIN}"
@@ -50,3 +51,4 @@ fi
 # done;
 
 export BAT_CONFIG_PATH="${HOME}/.zshrc/bat.conf"
+export PATH="${PATH}:${ZGITDIR}"

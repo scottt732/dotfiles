@@ -1,0 +1,3 @@
+#!/bin/bash
+git reflog | grep checkout | grep -v -w -e 'dev' -e 'staging' -e 'prod' -e 'main' -e 'master' | grep -o 'to .*$' | grep -o ' .*$' | awk '!x[$0]++' | head -n "${1:-10}"
+

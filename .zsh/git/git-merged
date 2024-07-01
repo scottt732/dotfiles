@@ -1,0 +1,2 @@
+#!/bin/bash
+git branch --list '[^main|master|dev|staging|prod]*' -v --format='%(committerdate:short)  %(refname:short)' --sort=committerdate --merged
