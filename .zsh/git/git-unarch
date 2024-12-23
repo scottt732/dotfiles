@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if a branch name is provided
+if [[ -z "$1" ]]; then
+  echo "Usage: git-unarch <branch_name>"
+  exit 1
+fi
+
+branch_name="$1"
+archive_ref="refs/archive/$branch_name"
+
+# Verify that the archived branch reference exists
+if ! git show-ref --verify --quiet "$archive_ref"; then
+  echo "Error: Archived branch '$branch_name' does not exist."
+  exit 1
+fi
+
+# Restore the branch by updating its ref and delete the archived ref
+git update-ref "refs/heads/$branch_name" "$archive_ref" && git update-ref -d "$archive_ref"
+
+echo "Branch '$branch_name' has been restored from archive."

@@ -4,12 +4,44 @@ set -o pipefail
 
 dirname=$(dirname "$0")
 current_branch=$(git branch --show-current)
-parent="$1"
 
+function get_parent {
+    current_branch="$1"
+    if [[ "${current_branch}" == "dev" ]]; then
+        echo "staging"
+    elif [[ "${current_branch}" == "staging" ]]; then
+        echo "prod"
+    elif [[ "${current_branch}" == "prod" ]]; then
+        >&2 echo "Prod has no parent"
+        exit 1
+    else
+        echo `git show-branch 2>&1 | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'`
+
+    fi
+}
+
+echo "dirname: ${dirname}"
+echo "current branch: ${current_branch}"
+
+parent="$1"
 if [ -z "$parent" ]; then
-    parent=$($dirname/git-parent)
+    echo "looking for parent"
+    parent=$(get_parent "${current_branch:?}")
 fi
 
+while [ -z "$parent" ]; do
+    read -p "Couldn't find parent branch. Is it dev (y/n)?" choice
+    case "$choice" in
+      y|Y )
+        parent=dev
+        ;;
+      * )
+        ;;
+    esac
+done
+
+
+echo "parent: ${parent}"
 if [[ "${current_branch}" =~ ^dev|staging|prod|main|master$ ]]; then
     >&2 echo "Refusing to squash ${current_branch} branch"
     exit 1

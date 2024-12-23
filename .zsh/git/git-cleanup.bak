@@ -1,0 +1,2 @@
+#!/bin/bash
+git branch --merged | grep -E -v "(^\*|master|main|dev|staging|prod)" | xargs git branch -d -v | while IFS= read -r line; do printf '%s %s %s\n' "$(date)" "$(pwd)" "$line"; done >> ~/git_cleanup.log

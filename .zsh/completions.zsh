@@ -9,6 +9,14 @@ _dotnet_zsh_complete()
 
 compctl -K _dotnet_zsh_complete dotnet
 
+if [ $(command -v argocd) ]; then
+  source <(argocd completion zsh)
+fi
+
+if [ $(command -v helm) ]; then
+  source <(helm completion zsh)
+fi
+
 if [ $(command -v kubectl) ]; then
   source <(kubectl completion zsh)
 fi

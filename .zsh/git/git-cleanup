@@ -1,2 +1,38 @@
 #!/bin/bash
-git branch --merged | grep -E -v "(^\*|master|main|dev|staging|prod)" | xargs git branch -d -v | while IFS= read -r line; do printf '%s %s %s\n' "$(date)" "$(pwd)" "$line"; done >> ~/git_cleanup.log
+
+# List of protected branches
+protected=("dev" "staging" "prod" "main" "master")
+
+# Fetch merged branches, including the last commit date and SHA
+merged_branches=$(git branch --list '[^main|master|dev|staging|prod]*' -v --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=committerdate --merged)
+
+# Use `fzf` to allow multiple selection of branches with date and SHA information
+selected_branches=$(echo "$merged_branches" | fzf --multi --preview 'git log -1 --oneline -- {3}')
+
+# Exit if no branches were selected
+if [[ -z "$selected_branches" ]]; then
+  echo "No branches selected for archiving."
+  exit 0
+fi
+
+# Iterate over each selected branch
+while IFS= read -r line; do
+  # Extract date, SHA, and branch name from the selected line
+  branch_date=$(echo "$line" | awk '{print $1}')
+  commit_sha=$(echo "$line" | awk '{print $2}')
+  branch_name=$(echo "$line" | awk '{print $3}')
+
+  # Check if branch is protected
+  for protected_branch in "${protected[@]}"; do
+    if [[ "$branch_name" == "$protected_branch" ]]; then
+      echo "Skipping protected branch '$branch_name'."
+      continue 2
+    fi
+  done
+
+  # Archive and delete the branch
+  git add-archive "$branch_name" && git branch -D "$branch_name" > /dev/null
+  echo "Archived branch '$branch_name' (last commit: $branch_date, SHA: $commit_sha)."
+done <<< "$selected_branches"
+
+echo "Run 'git lsarch' to see archived branches."

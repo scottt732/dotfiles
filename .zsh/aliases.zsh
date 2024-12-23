@@ -33,7 +33,9 @@ if command -v kubectl > /dev/null; then
     alias kubedev="aws eks update-kubeconfig --name cosmos-dev-cluster --profile=cosmos-dev --region=us-east-1"
 fi
 
-alias fzf="f() { /usr/bin/fzf --preview \"bat --color=always --style=numbers --line-range=:500 {}\" $@};f"
+alias standup="(cd ~/cosmos/cosmos-eng && ./eng.py) | pbcopy && echo 'Check your clipboard'"
+alias wip="git commit -am 'wip' && git push"
+alias fzf="f() { $(whereis -bq fzf) --preview \"$(whereis -bq bat) --color=always --style=numbers --line-range=:500 {}\" $@};f"
 alias findex="f() { find $@ -exec bat {} + };f"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
@@ -65,6 +67,7 @@ openMine() {
 if command -v git > /dev/null; then
     git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
     git config --global alias.merged "branch --list '[^main|master|dev|staging|prod]*' -v --format='%(committerdate:short)  %(refname:short)' --sort=committerdate --merged"
+    git config --global alias.stashes "stash list --pretty='format:%C(yellow)%h %Creset- %Cgreen%ad%Creset - %s' --date=short"
     git config --global rerere.enabled true
     alias ticket=openTicket
 fi
@@ -88,4 +91,4 @@ openStandup() {
 alias current=openCurrent
 alias upcoming=openUpcoming
 alias mine=openMine
-alias standup=openStandup
+alias standup-ui=openStandup

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Define color codes
+RED='\033[0;31m'
+NO_COLOR='\033[0m'
+
+# Define the exclusion pattern for branches
+exclude_pattern='[^main|master|dev|staging|prod]*'
+
+# Get the list of merged branches using `git-merged` behavior
+merged_branches=$(git branch --list "$exclude_pattern" -v --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=-committerdate --merged)
+
+# Get the list of all branches with dates and SHAs, excluding the protected branches
+all_branches=$(git branch --list "$exclude_pattern" -v --format='%(committerdate:short) %(objectname:short) %(refname:short)' --sort=-committerdate)
+
+# Loop through each branch in `all_branches`
+while IFS= read -r line; do
+  # Check if the branch is in the merged branches list
+  if echo "$merged_branches" | grep -qF "$line"; then
+    # Branch is merged, print in red
+    echo -e "${RED}${line}${NO_COLOR} (merged)"
+  else
+    # Branch is not merged, print in default color
+    echo "$line"
+  fi
+done <<< "$all_branches"
