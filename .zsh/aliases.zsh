@@ -20,6 +20,10 @@ fi
 
 if command -v bat > /dev/null; then
     alias less='bat'
+
+    if command -v fzf > /dev/null; then
+        alias fzf="f() { $(command -v fzf) --preview \"$(command -v bat) --color=always --style=numbers --line-range=:500 {}\" $@};f"
+    fi
 fi
 
 if command -v gh > /dev/null; then
@@ -35,7 +39,6 @@ fi
 
 alias standup="(cd ~/cosmos/cosmos-eng && ./eng.py) | pbcopy && echo 'Check your clipboard'"
 alias wip="git commit -am 'wip' && git push"
-alias fzf="f() { $(whereis -bq fzf) --preview \"$(whereis -bq bat) --color=always --style=numbers --line-range=:500 {}\" $@};f"
 alias findex="f() { find $@ -exec bat {} + };f"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
