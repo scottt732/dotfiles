@@ -48,3 +48,7 @@ fi
 if [ $(command -v yarn) ]; then
   export PATH="$PATH:$(yarn global bin)"
 fi
+
+if [ $(command -v policy_sentry) ]; then
+  eval "$(_POLICY_SENTRY_COMPLETE=zsh_source policy_sentry)"
+fi

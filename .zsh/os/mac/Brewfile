@@ -1,16 +1,17 @@
-tap 'bwhaley/ssmsh'
 tap 'hashicorp/tap'
 
 brew "bat"
+brew "bluetoothconnector"
 brew "bufbuild/buf/buf"
 brew "direnv"
 brew "gh"
 brew "jq"
+brew "kubectx"
 brew "kubeseal"
 brew "lsd"
 brew "nano"
 brew "pre-commit"
-brew "ssmsh"
+brew "bwhaley/ssmsh"
 brew "hashicorp/tap/terraform"
 brew "the_silver_searcher"
 brew "yq"

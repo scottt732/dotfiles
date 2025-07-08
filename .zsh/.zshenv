@@ -52,3 +52,4 @@ fi
 
 export BAT_CONFIG_PATH="${HOME}/.zshrc/bat.conf"
 export PATH="${PATH}:${ZGITDIR}"
+. "$HOME/.cargo/env"

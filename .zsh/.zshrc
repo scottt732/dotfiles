@@ -1,12 +1,12 @@
+autoload -Uz compinit
+compinit
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-autoload -Uz compinit
-compinit
 
 HISTSIZE=1000
 HISTFILE="${HOME}/.zhistory"
@@ -84,3 +84,12 @@ source "${ZDOTDIR}/functions.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
 [[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
+
+# fnm
+FNM_PATH="/Users/sholodak/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/sholodak/Library/Application Support/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+eval "$(direnv hook $SHELL)"

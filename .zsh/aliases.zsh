@@ -1,14 +1,18 @@
 #!/usr/bin/env zsh
 
-if command -v bat > /dev/null; then
-    alias cat="bat"
-fi
+# if command -v bat > /dev/null; then
+#     alias cat="bat"
+# fi
 
 # if command -v ag > /dev/null; then
 #     alias grep="ag"
 # fi
 
-alias git-remote-keybase="git-remote-keybase.exe"
+# alias git-remote-keybase="git-remote-keybase.exe"
+
+if command -v policy_sentry > /dev/null; then
+    alias psn='policy_sentry'
+fi
 
 if command -v lsd > /dev/null; then
     alias ls='lsd'
@@ -32,13 +36,53 @@ if command -v gh > /dev/null; then
 fi
 
 if command -v kubectl > /dev/null; then
-    alias kubeprod="aws eks update-kubeconfig --name cosmos-prod-cluster --profile=cosmos-prod --region=us-east-1"
-    alias kubestaging="aws eks update-kubeconfig --name cosmos-staging-cluster --profile=cosmos-staging --region=us-east-1"
-    alias kubedev="aws eks update-kubeconfig --name cosmos-dev-cluster --profile=cosmos-dev --region=us-east-1"
+    function kubeprodlegacy() {
+        if [ $# -eq 0 ]; then
+            aws eks update-kubeconfig --name cosmos-prod-cluster --profile=cosmos-prod --region=us-east-1 --alias cosmos-prod-legacy
+        else
+            kubectl $@ --context cosmos-prod-legacy
+        fi
+    }
+
+    function kubedevlegacy() {
+        if [ $# -eq 0 ]; then
+            aws eks update-kubeconfig --name cosmos-dev-cluster --profile=cosmos-dev --region=us-east-1 --alias cosmos-dev-legacy
+        else
+            kubectl $@ --context cosmos-dev-legacy
+        fi
+    }
+
+    function kubeprod() {
+        if [ $# -eq 0 ]; then
+            aws eks update-kubeconfig --name cosmos-prod-blue-us-east-1 --profile=cosmos-prod --region=us-east-1 --alias cosmos-prod-blue
+        else
+            kubectl $@ --context cosmos-prod-blue
+        fi
+    }
+
+    function kubedev() {
+        if [ $# -eq 0 ]; then
+            aws eks update-kubeconfig --name cosmos-dev-blue-us-east-1 --profile=cosmos-dev --region=us-east-1 --alias cosmos-dev-blue
+        else
+            kubectl $@ --context cosmos-dev-blue
+        fi
+    }
+
+    function kubemgmt() {
+        if [ $# -eq 0 ]; then
+            aws eks update-kubeconfig --name cosmos-mgmt-blue-us-east-1 --profile cosmos-mgmt --alias cosmos-mgmt-blue
+        else
+            kubectl $@ --context cosmos-mgmt-blue
+        fi
+    }
+
+    alias k8s-show-ns=" kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n"
 fi
 
 alias standup="(cd ~/cosmos/cosmos-eng && ./eng.py) | pbcopy && echo 'Check your clipboard'"
-alias wip="git commit -am 'wip' && git push"
+alias wai="git add :/ && git gen-commit ; git push && sleep 3 || true ; gh run watch || true"
+alias wip="git add :/ && git commit -m 'wip' && git push && sleep 3 || true ; gh run watch || true"
+# alias fzf="f() { $(whereis -bq fzf) --preview \"$(whereis -bq bat) --color=always --style=numbers --line-range=:500 {}\" $@};f"
 alias findex="f() { find $@ -exec bat {} + };f"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
