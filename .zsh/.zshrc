@@ -77,7 +77,7 @@ if command -v tmux > /dev/null; then
 fi
 
 source "${ZDOTDIR}/antidote.zsh"
-source "${ZDOTDIR}/direnv-ps10k.zsh"
+# source "${ZDOTDIR}/direnv-ps10k.zsh"
 source "${ZDOTDIR}/aliases.zsh"
 source "${ZDOTDIR}/completions.zsh"
 source "${ZDOTDIR}/functions.zsh"
@@ -92,4 +92,5 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
-eval "$(direnv hook $SHELL)"
+export SHELL=/bin/zsh
+eval "$(direnv hook zsh)"
