@@ -16,3 +16,5 @@
 .zsh/.zcompdump
 .zsh/.zsh_plugins.zsh
 .codebuddy
+.users_cache
+.channels_cache

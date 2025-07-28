@@ -14,6 +14,10 @@ if command -v policy_sentry > /dev/null; then
     alias psn='policy_sentry'
 fi
 
+if command -v podman > /dev/null; then
+    alias docker='podman'
+fi
+
 if command -v lsd > /dev/null; then
     alias ls='lsd'
     alias l='ls -l'
@@ -33,6 +37,36 @@ fi
 if command -v gh > /dev/null; then
     alias pr='gh pr view --web'
     alias repo='gh browse'
+fi
+
+if command -v git > /dev/null; then
+    # I hate bluetooth keyboards
+    function gitc() {
+      if [[ "$1" == ommit ]]; then
+        shift
+        git commit "$@"
+      fi
+    }
+
+    # I hate bluetooth keyboards
+    function gitp() {
+      case "$1" in
+        ull)
+          shift
+          git pull "$@"
+          ;;
+        ush)
+          shift
+          git push "$@"
+          ;;
+        *)
+          # Fallback — if you just typed `gitp` or something else
+          echo "Unknown subcommand. Did you mean:"
+          echo "  gitp ull → git pull"
+          echo "  gitp ush → git push"
+          ;;
+      esac
+    }
 fi
 
 if command -v kubectl > /dev/null; then
@@ -76,7 +110,11 @@ if command -v kubectl > /dev/null; then
         fi
     }
 
-    alias k8s-show-ns=" kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n"
+    function kk() {
+        kubectl kustomize --load-restrictor=LoadRestrictionsNone --enable-helm $@
+    }
+
+    alias k8s-show-ns="kubectl api-resources --verbs=list --namespaced -o name  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n"
 fi
 
 alias standup="(cd ~/cosmos/cosmos-eng && ./eng.py) | pbcopy && echo 'Check your clipboard'"
@@ -86,7 +124,20 @@ alias wip="git add :/ && git commit -m 'wip' && git push && sleep 3 || true ; gh
 alias findex="f() { find $@ -exec bat {} + };f"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-function tail() { /usr/bin/tail $@ | bat --paging=never -l log }
+push() {
+    local message
+    if [ $# -eq 0 ]; then
+        message="push"
+    else
+        message="$@"
+    fi
+    git add :/
+    git commit -m "${message}"
+    git pull --rebase && git push
+    git lg -n 1
+}
+
+tail() { /usr/bin/tail $@ | bat --paging=never -l log }
 
 openTicket() {
   ticket=$(git branch --show-current | grep -oi 'eng-[0-9]\+')
@@ -135,7 +186,54 @@ openStandup() {
   open "linear://linear.app/thecosmos/view/3bb1afc7-573f-40f0-933b-fca76a899176"
 }
 
+claude() {
+  eval "$(aws configure export-credentials --profile cosmos-mgmt --format env)"
+  export CLAUDE_CODE_USE_BEDROCK=1
+  export AWS_REGION=us-east-1
+
+  CLAUDE_PATH="$(nvm which default | sed 's|/bin/node$|/bin/claude|')"
+  "$CLAUDE_PATH" "$@"
+}
+
 alias current=openCurrent
 alias upcoming=openUpcoming
 alias mine=openMine
 alias standup-ui=openStandup
+claude() {
+  # Check if current credentials work
+  if ! aws sts --profile cosmos-mgmt get-caller-identity >/dev/null 2>&1; then
+    echo "🔄 AWS credentials expired, refreshing..."
+
+    # Try to refresh SSO login (this will open browser if needed)
+    echo "🔐 Refreshing AWS SSO session..."
+    aws sso login --profile cosmos-mgmt
+
+    if [[ $? -ne 0 ]]; then
+      echo "❌ AWS SSO login failed"
+      return 1
+    fi
+  fi
+
+  # Export the credentials
+  eval "$(aws configure export-credentials --profile cosmos-mgmt --format env)"
+
+  if [[ -z "$AWS_ACCESS_KEY_ID" ]]; then
+    echo "❌ Failed to export AWS credentials"
+    return 1
+  fi
+
+  export CLAUDE_CODE_USE_BEDROCK=1
+  export AWS_REGION=us-east-1
+
+  CLAUDE_PATH="$(nvm which default | sed 's|/bin/node$|/bin/claude|')"
+  "$CLAUDE_PATH" "$@"
+}
+
+# Helper to manually refresh when needed
+claude-refresh() {
+  echo "🔄 Manually refreshing AWS credentials..."
+  unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+  aws sso login --profile cosmos-mgmt
+  eval "$(aws configure export-credentials --profile cosmos-mgmt --format env)"
+  echo "✅ Ready for claude!"
+}
