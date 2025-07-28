@@ -67,6 +67,14 @@ if command -v git > /dev/null; then
           ;;
       esac
     }
+
+    # I hate bluetooth keyboards
+    function gits() {
+      if [[ "$1" == tatus ]]; then
+        shift
+        git status "$@"
+      fi
+    }
 fi
 
 if command -v kubectl > /dev/null; then
