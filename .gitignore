@@ -1,5 +1,3 @@
-/*
-
 !.config/*
 .config/**/
 !.config/direnv/*
@@ -18,3 +16,4 @@
 .codebuddy
 .users_cache
 .channels_cache
+_cleanup/

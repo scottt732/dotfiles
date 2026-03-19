@@ -1,22 +1,11 @@
-autoload -Uz compinit
-compinit
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# direnv + p10k instant prompt integration
+# Must be first — direnv output happens before p10k captures stdout
+source "${ZDOTDIR}/direnv-ps10k.zsh"
 
 HISTSIZE=1000
 HISTFILE="${HOME}/.zhistory"
 SAVEHIST=1000
 setopt INC_APPEND_HISTORY
-
-if command -v git > /dev/null; then
-    git config --global user.email "scottt732@gmail.com"
-    git config --global user.name "Scott Holodak"
-fi
 
 # OS-specific
 if [[ $(uname) == "Darwin" ]]; then
@@ -76,14 +65,20 @@ if command -v tmux > /dev/null; then
     fi
 fi
 
-source "${ZDOTDIR}/antidote.zsh"
-# source "${ZDOTDIR}/direnv-ps10k.zsh"
-source "${ZDOTDIR}/aliases.zsh"
-source "${ZDOTDIR}/completions.zsh"
-source "${ZDOTDIR}/functions.zsh"
+# Docker CLI completions (fpath must be set before compinit)
+fpath=(/Users/sholodak/.docker/completions $fpath)
 
-# To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
-[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
+# Single compinit — cached, rebuilds once per day
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+source "${ZDOTDIR}/antidote.zsh"
+source "${ZDOTDIR}/aliases.zsh"
+source "${ZDOTDIR}/functions.zsh"
 
 # fnm
 FNM_PATH="/Users/sholodak/Library/Application Support/fnm"
@@ -93,4 +88,23 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 export SHELL=/bin/zsh
-eval "$(direnv hook zsh)"
+
+. "$HOME/.local/bin/env"
+
+# bun completions
+[ -s "/Users/sholodak/.bun/_bun" ] && source "/Users/sholodak/.bun/_bun"
+
+# PATH additions (deduplicated)
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="$PATH:/Users/sholodak/.cache/lm-studio/bin"
+export PATH="/Users/sholodak/.antigravity/antigravity/bin:$PATH"
+export PATH=/Users/sholodak/.opencode/bin:$PATH
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Cached completions (run `regen-completions` to refresh)
+source "${ZDOTDIR}/completions.zsh"
